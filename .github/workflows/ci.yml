@@ -18,10 +18,10 @@ concurrency:
 
 jobs:
   # ============================================================
-  # 1. Build & Typecheck
+  # 1. Lint + Typecheck + Build (gate de qualidade)
   # ============================================================
   build:
-    name: Build & Typecheck
+    name: Lint, Typecheck & Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,8 +30,19 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Typecheck backend
+      - name: Lint (ESLint)
+        run: npm run lint
+      - name: Typecheck (tsc --noEmit)
         run: npm run check
+      - name: Build de produção (tsc -b && vite build)
+        run: npm run build
+      - name: Upload do bundle (artefato)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+          if-no-files-found: error
 
   # ============================================================
   # 2. LGPD PII Leak Gate (bloqueante)

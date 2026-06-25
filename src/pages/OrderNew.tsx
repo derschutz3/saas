@@ -145,7 +145,7 @@ export default function OrderNew() {
           <Pill label={channel} tone="neutral" />
           <select
             value={channel}
-            onChange={(e) => setChannel(e.target.value as any)}
+            onChange={(e) => setChannel(e.target.value as Channel)}
             className="ui-select w-auto"
           >
             <option value="WHATSAPP">WhatsApp</option>
