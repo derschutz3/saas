@@ -13,7 +13,7 @@ import { ApiError, asyncHandler } from '../shared/http.js'
 import { validateBody } from '../shared/validate.js'
 import { requireAuth, getCtx } from '../shared/middleware.js'
 import { getStore } from '../infra/store.js'
-import { routeCache } from '../shared/route-cache.js'
+import { routeCache, cacheRoute } from '../shared/route-cache.js'
 import {
   categoryCreateSchema,
   categoryUpdateSchema,
@@ -32,6 +32,18 @@ export const registerCategoryRoutes = (app: Router): void => {
   router.get(
     '/',
     requireAuth,
+    // Cache read-only: a lista de categorias muda raramente e é lida em quase
+    // toda página. Invalidada por bumpByPrefix(`categories:${tenantId}:`) em
+    // qualquer escrita (create/update/delete/reorder/bulk-move).
+    cacheRoute({
+      ttlMs: 60_000,
+      key: (req) => {
+        const ctx = getCtx(req)
+        if (!ctx?.tenantId) return ''
+        const archived = req.query.includeArchived === '1' || req.query.includeArchived === 'true'
+        return `categories:${ctx.tenantId}:list:${archived ? 'all' : 'active'}`
+      },
+    }),
     asyncHandler(async (req: Request, res: Response) => {
       const ctx = getCtx(req)
       const store = await getStore()
