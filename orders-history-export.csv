@@ -1,0 +1,20 @@
+﻿ID;Data;Status;Canal;Cliente;Telefone;Endereço;Itens;Subtotal (R$);Total (R$)
+a8d2d990-8c23-422e-9295-66eab3127707;16/06/2026, 04:05;Confirmado;WhatsApp;Carla Souza;11943210987;;2;393,82;393,82
+8bdf456c-69aa-4c11-9a36-68b63721f4f3;16/06/2026, 04:05;Confirmado;WhatsApp;João Santos;11976543210;Rua das Flores, 142;3;369,99;369,99
+105a9f05-d799-4232-9764-a264877e2e1d;16/06/2026, 04:05;Confirmado;WhatsApp;Beatriz Rocha;11921098765;;3;365,36;365,36
+d3673494-4c18-4e7a-88ad-b792209a4299;16/06/2026, 04:05;Confirmado;Balcão;Maria Silva;11987654321;Rua das Flores, 741;3;324,60;324,60
+a58c12af-362e-4424-9d8c-2cd61f865317;16/06/2026, 04:05;Confirmado;iFood;Lucas Lima;11932109876;Rua do Sol, 75;3;312,66;312,66
+e65d1914-b437-4efb-a27f-4d735128eafd;16/06/2026, 04:05;Confirmado;iFood;Renata Vieira;11944332211;;1;303,08;303,08
+9e93e2fd-f053-4791-bea9-0234f9385a01;16/06/2026, 04:05;Confirmado;WhatsApp;Rafael Castro;11998765432;Rua do Sol, 574;3;299,01;299,01
+675c6d3d-b8a6-415c-a75f-b5ed70bf1d64;16/06/2026, 04:05;Confirmado;Balcão;Marina Pereira;11909876543;;2;279,12;279,12
+f0b3791e-ea57-4ce5-ae84-1d977808b250;16/06/2026, 04:05;Confirmado;iFood;Larissa Moura;11922110099;Rua do Sol, 234;3;276,97;276,97
+e0886ebd-9ec2-445d-88bd-90db237ef215;16/06/2026, 04:05;Confirmado;Balcão;Bruno Cardoso;11933221100;Rua do Sol, 537;2;225,45;225,45
+496f6a93-e41a-4bd4-91f2-91ba52117fb1;16/06/2026, 04:05;Confirmado;WhatsApp;Thiago Barros;11977665544;;3;194,47;194,47
+6816be5e-3f2b-44e2-9436-7cb5ff1c7d38;16/06/2026, 04:05;Confirmado;Balcão;Ana Costa;11965432109;;2;151,36;151,36
+f41ea2a6-69ec-4ef8-9d04-526cbf471fda;16/06/2026, 04:05;Confirmado;WhatsApp;Felipe Dias;11910987654;;2;151,33;151,33
+6c906298-be85-4853-bdc8-f8ad7c386a37;16/06/2026, 04:05;Confirmado;iFood;Pedro Alves;11954321098;;1;146,66;146,66
+1edb64a8-1d18-418d-9a22-c9b72f320817;16/06/2026, 04:05;Confirmado;Site;Camila Ribeiro;11988776655;;2;131,42;131,42
+e2581a9b-83d5-498f-a323-7c2ebc4b4396;16/06/2026, 04:05;Confirmado;WhatsApp;Diego Fernandes;11911009988;;2;118,20;118,20
+6f17ce00-7772-4b2b-81b1-429b0812bcff;16/06/2026, 04:05;Confirmado;WhatsApp;Patrícia Melo;11966554433;Rua do Sol, 140;1;98,96;98,96
+2065c0d4-e760-435e-bb8c-b437aa8e0119;16/06/2026, 04:05;Confirmado;Site;Gabriel Pinto;11955443322;;1;64,17;64,17
+283ed20d-0d13-42d8-a20a-be8491970407;19/05/2026, 04:05;Entregue;undefined;Bar do Zé Ltda;11999887766;Rua das Flores, 123;1;50,00;50,00

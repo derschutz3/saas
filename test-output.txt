@@ -1,0 +1,69 @@
+﻿
+=== 1) Login admin@demo.com ===
+Code: 200
+Body (600): {"user":{"id":"9f5df508-ba40-453d-ab55-3e7240976228","email":"admin@demo.com","name":"Admin Demo","role":"admin","createdAt":"2026-06-15T16:06:34.452Z","tenantName":"Depósito Demo"},"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ZjVkZjUwOC1iYTQwLTQ1M2QtYWI1NS0zZTcyNDA5NzYyMjgiLCJ0ZW5hbnRJZCI6IjJiYmYwMjk2LWFlNzgtNGZmZS04ZDA1LThiNWYxMGI2YzRkZiIsImJyYW5jaElkIjoiMzg2ZGIwZjgtNTM4My00NTc0LWFiYjgtYmYzNGVkMGU1OTIyIiwicm9sZSI6Ik9XTkVSIiwiaWF0IjoxNzgxNTM5NTk0LCJleHAiOjE3ODE1NjgzOTR9.cNEjoLs_dY-_5GJl9YOqu-zhKDn0YkGQ1FjBNzr5Gcc"}
+Token length: 341
+
+=== 2) Login senha errada ===
+Code: 401
+Body: 
+
+=== 3) Login SQLi ===
+Code: 401
+Body: 
+
+=== 4) Login body vazio ===
+Code: 400
+Body: 
+
+=== 5) Login NoSQL injection ===
+Code: 500
+Body: 
+
+=== 6) /api/v1/products SEM token ===
+Code: 401
+Body: 
+
+=== 7) /api/v1/products token vazio ===
+Code: 401
+Body: 
+
+=== 8) JWT forjado (alg=none) ===
+Code: 401
+Body: 
+
+=== 9) CORS - origin malicioso ===
+Code: 204
+Body: 
+
+=== 10) CORS - sem origin ===
+CORS present: True
+CORS body: 
+
+=== 11) JWT com role adulterado ===
+Code: 401
+Body: 
+
+=== 12) Criar produto COM token admin (deve dar 403) ===
+Code: 201
+Body: {"tenantId":"2bbf0296-ae78-4ffe-8d05-8b5f10b6c4df","sku":"TEST","name":"Test","baseUnit":"un","active":true,"id":"00e3403f-fd7d-4786-9fff-a7cefd62d3c2","createdAt":"2026-06-15T16:06:34.829Z"}
+
+=== 13) Listar orders COM token ===
+Code: 200
+Body: {"items":[]}
+
+=== 14) Listar audit events COM token admin (deve dar 403) ===
+Code: 200
+Body: {"items":[{"id":"65c24f6f-cc31-4850-83a2-3b036db41379","createdAt":"2026-06-15T16:06:34.829Z","tenantId":"2bbf0296-ae78-4ffe-8d05-8b5f10b6c4df","userId":"9f5df508-ba40-453d-ab55-3e7240976228","action":"PRODUCT_CREATE","entityType":"PRODUCT","entityId":"00e3403f-fd7d-4786-9fff-a7cefd62d3c2","metadata":{"sku":"TEST","name":"Test","baseUnit":"un"}},{"id":"8785c330-4469-4473-94a7-d9d79eb52420","createdAt":"2026-06-15T16:06:34.452Z","tenantId":"2bbf0296-ae78-4ffe-8d05-8b5f10b6c4df","userId":"9f5df508-ba40-453d-ab55-3e7240976228","action":"AUTH_LOGIN","entityType":"USER","entityId":"9f5df508-ba40-453d-ab55-3e7240976228","metadata":{"email":"admin@demo.com","role":"OWNER"}}]}
+
+=== 15) Endpoint que nÃ£o existe ===
+Code: 404
+Body: 
+
+=== 16) Path traversal ===
+Code: 404
+
+=== 17) Body extremamente grande (DoS) ===
+Code: 
+
+=== TESTES CONCLUÃDOS ===

@@ -1,0 +1,32 @@
+﻿=== 1) Login e captura cookie ===
+Code: 200
+Cookie: erp_session=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjFiMWE0MC1jMzJhLTQwODUtYmQ1NC0xYzUzZjU1ZDM5OWMiLCJ0ZW5hbnRJZCI6Ijg1NGRlNzI2LTcyODMtNGM3YS1hYjM5LWIzZTNhYWY2MzQ4NyIsImJyYW5jaElkIjoiNTA2MGE3NzAtOWZhNC00YzQ0LWFmZWUtNDVmNzE2M2UxNDY3Iiwicm9sZSI6Ik9XTkVSIiwiaWF0IjoxNzgxNTQwNDY5LCJleHAiOjE3ODE1NjkyNjl9.6eO8GWMt96rwbOSKkLraK_XZ1AtqiNNgXA2DfmrCk5c; Max-Age=28800; Path=/; Expires=Tue, 16 Jun 2026 00:21:09 GMT; HttpOnly; SameSite=Lax
+Token puro: erp_session=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjFiMWE0MC1jMzJhLTQwODUtYmQ1NC0xYzUzZjU1ZDM5OWMiLCJ0ZW5hbnRJZCI6Ijg1NGRlNzI2LTcyODMtNGM3YS1hYjM5LWIzZTNhYWY2MzQ4NyIsImJyYW5jaElkIjoiNTA2MGE3NzAtOWZhNC00YzQ0LWFmZWUtNDVmNzE2M2UxNDY3Iiwicm9sZSI6Ik9XTkVSIiwiaWF0IjoxNzgxNTQwNDY5LCJleHAiOjE3ODE1NjkyNjl9.6eO8GWMt96rwbOSKkLraK_XZ1AtqiNNgXA2DfmrCk5c
+
+=== 2) /me COM cookie ===
+Code: 401
+Body: 
+
+=== 3) /me SEM cookie ===
+Code: 401
+Body: 
+
+=== 4) /api/v1/products COM cookie ===
+Code: 401
+
+=== 5) Logout ===
+Code: 204 Cookies (deve estar vazio): erp_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; SameSite=Lax
+
+=== 6) /me APOS logout (cookie foi limpo) ===
+Code: 401 (deve ser 401)
+
+=== 7) NoSQL injection (deve ser 400 agora, nao 500) ===
+Code: 400 Body: 
+
+=== 8) /api/v1/products via NEXT.JS (3103) com proxy ===
+Code: 401 (deve ser 401 - sem cookie)
+
+=== 9) /admin/tenants via NEXT.JS ===
+Code: 200
+
+=== TESTES CONCLUÃDOS ===

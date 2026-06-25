@@ -1,0 +1,87 @@
+﻿Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ...
+
+=== 1) CORS preflight com Origin malicioso ===
+Code: 204
+Headers: {
+    "access-control-allow-headers":  "Content-Type,Authorization,x-tenant-id,x-branch-id,x-trace-id",
+    "vary":  "Origin",
+    "Date":  "Mon, 15 Jun 2026 16:20:21 GMT",
+    "Content-Length":  "0",
+    "connection":  "close",
+    "access-control-allow-methods":  "GET,POST,PUT,DELETE,PATCH,OPTIONS",
+    "access-control-allow-credentials":  "true"
+}
+
+=== 2) CORS preflight com Origin localhost ===
+Code: 204
+Headers: {
+    "access-control-allow-headers":  "Content-Type,Authorization,x-tenant-id,x-branch-id,x-trace-id",
+    "vary":  "Origin",
+    "Date":  "Mon, 15 Jun 2026 16:20:21 GMT",
+    "Content-Length":  "0",
+    "connection":  "close",
+    "access-control-allow-methods":  "GET,POST,PUT,DELETE,PATCH,OPTIONS",
+    "access-control-allow-credentials":  "true",
+    "access-control-allow-origin":  "http://localhost:5173"
+}
+
+=== 3) Real request com Origin malicioso ===
+Code: 200
+Headers: {
+    "Set-Cookie":  "erp_session=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjFiMWE0MC1jMzJhLTQwODUtYmQ1NC0xYzUzZjU1ZDM5OWMiLCJ0ZW5hbnRJZCI6Ijg1NGRlNzI2LTcyODMtNGM3YS1hYjM5LWIzZTNhYWY2MzQ4NyIsImJyYW5jaElkIjoiNTA2MGE3NzAtOWZhNC00YzQ0LWFmZWUtNDVmNzE2M2UxNDY3Iiwicm9sZSI6Ik9XTkVSIiwiaWF0IjoxNzgxNTQwNDIxLCJleHAiOjE3ODE1NjkyMjF9.vj5n0wjzH4DTLLBglV6-0_I78hiXWn9OKyiT3gjvAt8; Max-Age=28800; Path=/; Expires=Tue, 16 Jun 2026 00:20:21 GMT; HttpOnly; SameSite=Lax",
+    "Vary":  "Origin, Accept-Encoding",
+    "Date":  "Mon, 15 Jun 2026 16:20:21 GMT",
+    "ratelimit-policy":  "100;w=900",
+    "ETag":  "W/\"217-Zwre0+FFlFi9RTQjEk3kELaEgu8\"",
+    "ratelimit-remaining":  "99",
+    "Content-Length":  "535",
+    "ratelimit-reset":  "900",
+    "ratelimit-limit":  "100",
+    "Content-Type":  "application/json; charset=utf-8",
+    "connection":  "close",
+    "access-control-allow-credentials":  "true"
+}
+
+=== 4) Brute force - 10 tentativas com senha errada ===
+Attempt 1 -> Code:  (duration: 0.03s)
+Attempt 2 -> Code:  (duration: 0.05s)
+Attempt 3 -> Code:  (duration: 0.05s)
+Attempt 4 -> Code:  (duration: 0.05s)
+Attempt 5 -> Code:  (duration: 0.05s)
+Attempt 6 -> Code:  (duration: 0.05s)
+Attempt 7 -> Code:  (duration: 0.05s)
+Attempt 8 -> Code:  (duration: 0.05s)
+Attempt 9 -> Code:  (duration: 0.05s)
+Attempt 10 -> Code:  (duration: 0.05s)
+
+=== 5) Login com credenciais vazias (mÃºltiplas variantes) ===
+{"email":"","password":""} -> Code: 400
+{"email":null,"password":null} -> Code: 400
+{"email":"a","password":""} -> Code: 400
+{"password":"x"} -> Code: 400
+
+=== 6) Token JWT expirado (manipulado) ===
+Code: 401 Body: 
+
+=== 7) Verificar headers de seguranÃ§a ===
+X-Frame-Options: AUSENTE
+X-Content-Type-Options: AUSENTE
+Strict-Transport-Security: AUSENTE
+Content-Security-Policy: AUSENTE
+Access-Control-Allow-Origin: AUSENTE
+Server: AUSENTE
+X-Powered-By: AUSENTE
+
+=== 8) Request smuggling (Content-Length vs Transfer-Encoding) ===
+Code: 
+
+=== 9) /api/auth/register tenta cadastrar ===
+Code: 501 Body: 
+
+=== 10) Endpoint /api/v1/auth/me sem token ===
+Code: 401 Body: 
+
+=== 11) Header injection em logs ===
+Code: 200
+
+=== TESTES AVANÃ‡ADOS CONCLUÃDOS ===

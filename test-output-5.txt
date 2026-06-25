@@ -1,0 +1,42 @@
+﻿=== 1) Login (com session) ===
+Code: 200
+powershell.exe : Não é possível chamar um método em uma expressão de valor nulo.
+No C:\Users\FSOS\AppData\Local\Programs\TRAE 
+SOLO\resources\app\out\vs\workbench\contrib\terminal\common\scripts\safe_rm_aliases.ps1:1134 caractere:9
++         & $originalPowerShell @modifiedArgs
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Não é possível ... de valor nulo.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+No C:\Users\FSOS\Documents\trae_projects\3\security-tests-4.ps1:6 caractere:74
++ ... ies | ForEach-Object { "$($_.Name)=$($_.Value.Substring(0,30))...; Ht ...
++                                          ~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
+    + FullyQualifiedErrorId : InvokeMethodOnNull
+ 
+Cookies: =...; HttpOnly=
+
+=== 2) /me COM session ===
+Code: 200
+Body: {"ok":true,"user":{"id":"5f1b1a40-c32a-4085-bd54-1c53f55d399c","tenantId":"854de726-7283-4c7a-ab39-b3e3aaf63487","branchId":"5060a770-9fa4-4c44-afee-45f7163e1467","role":"OWNER"}}
+
+=== 3) /api/v1/products COM session ===
+Code: 200
+
+=== 4) Logout COM session ===
+Code: 204
+
+=== 5) /me APOS logout ===
+Code: 401 (esperado 401)
+
+=== 6) /api/v1/auth/login via NEXT.JS proxy (3103) ===
+Code: 200
+Body (200): {"user":{"id":"5f1b1a40-c32a-4085-bd54-1c53f55d399c","email":"admin@demo.com","name":"Admin Demo","role":"admin","createdAt":"2026-06-15T16:21:48.921Z","tenantName":"Depósito Demo"},"token":"eyJhbGciO
+
+=== 7) /me via NEXT.JS proxy (3103) com session ===
+Code: 200
+Body: {"ok":true,"user":{"id":"5f1b1a40-c32a-4085-bd54-1c53f55d399c","tenantId":"854de726-7283-4c7a-ab39-b3e3aaf63487","branchId":"5060a770-9fa4-4c44-afee-45f7163e1467","role":"OWNER"}}
+
+=== 8) /api/v1/products via NEXT.JS proxy com session ===
+Code: 200
+Body (200): {"items":[{"tenantId":"854de726-7283-4c7a-ab39-b3e3aaf63487","sku":"HEINEKEN-350","name":"Heineken Lata 350ml","baseUnit":"un","active":true,"id":"f5d34770-3bc4-4549-890d-561f2f0d46c7","createdAt":"20

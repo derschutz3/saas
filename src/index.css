@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    @apply bg-app-bg text-app-text;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, #2F6FED 28%, transparent);
+  }
+
+  * {
+    scrollbar-color: #2A3142 #0F1115;
+  }
+}
+
+@layer components {
+  .ui-shell {
+    @apply min-h-dvh bg-app-bg text-app-text;
+  }
+
+  .ui-panel {
+    @apply rounded-2xl border border-app-border bg-app-s1 shadow-panel;
+  }
+
+  .ui-panel-2 {
+    @apply rounded-2xl border border-app-border bg-app-s2 shadow-panel;
+  }
+
+  .ui-muted {
+    @apply text-app-muted;
+  }
+
+  .ui-divider {
+    @apply border-t border-app-border;
+  }
+
+  .ui-input {
+    @apply w-full rounded-xl border border-app-border bg-app-s2 px-3 py-2 text-sm text-app-text outline-none placeholder:text-app-muted/60 focus:border-app-primary focus:ring-2 focus:ring-app-primary/25;
+  }
+
+  .ui-select {
+    @apply w-full rounded-xl border border-app-border bg-app-s2 px-3 py-2 text-sm text-app-text outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/25;
+  }
+
+  .ui-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-app-border bg-app-s2 px-3 py-2 text-sm font-semibold text-app-text transition;
+  }
+
+  .ui-btn:hover {
+    @apply bg-[#232B3B];
+  }
+
+  .ui-btn:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+
+  .ui-btn-primary {
+    @apply border-transparent bg-app-primary text-white;
+  }
+
+  .ui-btn-primary:hover {
+    background-color: #255ED0;
+  }
+
+  .ui-btn-ghost {
+    @apply bg-transparent;
+  }
+
+  .ui-btn-ghost:hover {
+    @apply bg-app-s2;
+  }
+
+  .ui-kbd {
+    @apply rounded-md border border-app-border bg-app-s2 px-1.5 py-0.5 font-mono text-[11px] text-app-muted;
+  }
+}

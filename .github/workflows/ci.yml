@@ -1,0 +1,108 @@
+# CI — Gates obrigatórios (LGPD-safe)
+#
+# SECURITY (LGPD): este CI Garante que PII NUNCA vaze em logs/audit.
+# O job `pii-leak-gate` FALHA o PR se qualquer log de produção incluir
+# chaves PII (email, name, phone, cpf, cnpj, document) em texto claro.
+
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ============================================================
+  # 1. Build & Typecheck
+  # ============================================================
+  build:
+    name: Build & Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Typecheck backend
+        run: npm run check
+
+  # ============================================================
+  # 2. LGPD PII Leak Gate (bloqueante)
+  # ============================================================
+  pii-leak-gate:
+    name: LGPD PII Leak Gate
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run PII redactor tests (38 tests)
+        run: npm run test:pii
+
+  # ============================================================
+  # 3. Route validation
+  # ============================================================
+  routes:
+    name: Routes validation
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validate registered routes
+        run: npm run check:routes
+
+  # ============================================================
+  # 4. Static analysis — detectar logs perigosos
+  # ============================================================
+  pii-static-check:
+    name: PII in logs (static)
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Detect logger.* with PII keys in plain text
+        run: |
+          echo "==== Procurando uso direto de logger.* com chaves PII ===="
+          # logger.info('x', { email: '...' }) é proibido
+          # logger.info('x', { metadata: { email: '...' } }) é proibido
+          # O correto é usar buildSafeAuditMeta() ou redactPii()
+          set +e
+          # Fails the step se encontrar padrão perigoso (excluindo testes, docs e comentários)
+          RESULT=$(grep -rEn --include='*.ts' \
+            --exclude-dir=node_modules \
+            --exclude-dir=scripts \
+            --exclude='*test*' \
+            --exclude='*pii-redactor*' \
+            --exclude='*security_best_practices_report.md' \
+            -e 'logger\.(info|warn|error|debug)\([^)]*(email|phone|cpf|cnpj|name|document|customer\.phone|customer\.name)\s*[:=]' \
+            api/ apps/erp-web/ 2>&1)
+          if [ -n "$RESULT" ]; then
+            echo ""
+            echo "❌ FALHA: encontrado uso direto de PII em logger:"
+            echo "$RESULT"
+            echo ""
+            echo "Use buildSafeAuditMeta() ao invés de passar PII em metadata."
+            exit 1
+          fi
+          echo "✅ Nenhum uso direto de PII em logger encontrado."
