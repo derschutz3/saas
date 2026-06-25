@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import { useSessionStore } from '@/stores/sessionStore'
 import type { ReactNode } from 'react'
 import {
+  BarChart3,
   Boxes,
   ClipboardList,
   CreditCard,
@@ -12,6 +13,7 @@ import {
   Settings,
 } from 'lucide-react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { GarciatWordmark } from '@/components/brand/Logo'
 
 const NavItem = (props: { to: string; label: string; icon: ReactNode }) => {
   return (
@@ -42,17 +44,15 @@ export default function AppShell() {
       <div className="mx-auto grid max-w-[1480px] grid-cols-[288px_1fr] gap-6 px-6 py-6">
         <aside className="ui-panel sticky top-6 h-[calc(100dvh-48px)] p-4">
           <div className="flex items-center gap-3 px-2 py-2">
-            <div className="grid size-10 place-items-center rounded-xl border border-app-border bg-app-s2 text-app-text">
-              <Boxes className="size-5" />
-            </div>
-            <div className="min-w-0">
-              <div className="truncate text-sm font-semibold tracking-tight text-app-text">ERP Bebidas</div>
+            <GarciatWordmark size="sm" />
+            <div className="ml-auto min-w-0 text-right">
               <div className="truncate text-xs text-app-muted">{me?.name ?? 'Sessão'}</div>
             </div>
           </div>
 
           <div className="mt-4 space-y-1">
             <NavItem to="/app/dashboard" label="Dashboard" icon={<Gauge className="size-4" />} />
+            <NavItem to="/app/reports" label="Relatórios" icon={<BarChart3 className="size-4" />} />
             <NavItem to="/app/orders/new" label="Pedido rápido" icon={<ClipboardList className="size-4" />} />
             <NavItem to="/app/orders/queue" label="Fila de pedidos" icon={<Package className="size-4" />} />
             <NavItem to="/app/inventory" label="Estoque" icon={<Boxes className="size-4" />} />

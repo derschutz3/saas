@@ -3,6 +3,7 @@ import Login from "@/pages/Login";
 import RequireSession from "@/components/auth/RequireSession";
 import AppShell from "@/components/layout/AppShell";
 import Dashboard from "@/pages/Dashboard";
+import Reports from "@/pages/Reports";
 import OrderNew from "@/pages/OrderNew";
 import OrderQueue from "@/pages/OrderQueue";
 import Inventory from "@/pages/Inventory";
@@ -21,6 +22,7 @@ export default function App() {
         <Route element={<RequireSession />}>
           <Route path="/app" element={<AppShell />}>
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="reports" element={<Reports />} />
             <Route path="orders">
               <Route path="new" element={<OrderNew />} />
               <Route path="queue" element={<OrderQueue />} />
