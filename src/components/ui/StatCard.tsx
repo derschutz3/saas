@@ -1,6 +1,7 @@
+import { memo } from 'react'
 import { cn } from '@/lib/utils'
 
-export default function StatCard(props: {
+function StatCard(props: {
   label: string
   value: string
   hint?: string
@@ -16,10 +17,17 @@ export default function StatCard(props: {
           : 'border-app-border bg-app-s1'
 
   return (
-    <div className={cn('rounded-2xl border p-4 shadow-panel', tone)}>
-      <div className="text-xs text-app-muted">{props.label}</div>
-      <div className="mt-2 text-2xl font-semibold tracking-tight text-app-text">{props.value}</div>
+    <div
+      className={cn(
+        'rounded-2xl border p-4 shadow-panel transition duration-150 hover:-translate-y-0.5 hover:shadow-raise',
+        tone,
+      )}
+    >
+      <div className="text-xs uppercase tracking-wide text-app-muted">{props.label}</div>
+      <div className="mt-2 text-2xl font-semibold tracking-tight text-app-text tabular-nums">{props.value}</div>
       {props.hint ? <div className="mt-1 text-xs text-app-muted/80">{props.hint}</div> : null}
     </div>
   )
 }
+
+export default memo(StatCard)

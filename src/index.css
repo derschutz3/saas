@@ -10,6 +10,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color-scheme: dark;
   }
 
   html,
@@ -20,6 +21,13 @@
   body {
     margin: 0;
     @apply bg-app-bg text-app-text;
+    /* Atmosfera sci-fi: brilhos radiais sutis nos cantos sobre o fundo escuro.
+       fixed + no-repeat para não pesar no scroll. */
+    background-image:
+      radial-gradient(900px 500px at 12% -10%, rgba(47, 111, 237, 0.10), transparent 60%),
+      radial-gradient(700px 420px at 100% 0%, rgba(198, 169, 107, 0.06), transparent 55%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
   }
 
   ::selection {
@@ -28,12 +36,52 @@
 
   * {
     scrollbar-color: #2A3142 #0F1115;
+    scrollbar-width: thin;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0F1115;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2A3142;
+    border: 2px solid #0F1115;
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3a4459;
+  }
+
+  /* Acessibilidade: foco visível consistente via teclado em todos os
+     elementos interativos (não aparece em clique de mouse). */
+  :focus-visible {
+    outline: 2px solid theme('colors.app.primary');
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  /* Respeita usuários que preferem menos movimento. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
 @layer components {
   .ui-shell {
-    @apply min-h-dvh bg-app-bg text-app-text;
+    @apply min-h-dvh bg-transparent text-app-text;
   }
 
   .ui-panel {
@@ -53,19 +101,23 @@
   }
 
   .ui-input {
-    @apply w-full rounded-xl border border-app-border bg-app-s2 px-3 py-2 text-sm text-app-text outline-none placeholder:text-app-muted/60 focus:border-app-primary focus:ring-2 focus:ring-app-primary/25;
+    @apply w-full rounded-xl border border-app-border bg-app-s2 px-3 py-2 text-sm text-app-text outline-none transition placeholder:text-app-muted/60 focus:border-app-primary focus:ring-2 focus:ring-app-primary/25;
   }
 
   .ui-select {
-    @apply w-full rounded-xl border border-app-border bg-app-s2 px-3 py-2 text-sm text-app-text outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/25;
+    @apply w-full rounded-xl border border-app-border bg-app-s2 px-3 py-2 text-sm text-app-text outline-none transition focus:border-app-primary focus:ring-2 focus:ring-app-primary/25;
   }
 
   .ui-btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-app-border bg-app-s2 px-3 py-2 text-sm font-semibold text-app-text transition;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-app-border bg-app-s2 px-3 py-2 text-sm font-semibold text-app-text transition duration-150;
   }
 
   .ui-btn:hover {
     @apply bg-[#232B3B];
+  }
+
+  .ui-btn:active {
+    @apply translate-y-px;
   }
 
   .ui-btn:disabled {
@@ -78,6 +130,8 @@
 
   .ui-btn-primary:hover {
     background-color: #255ED0;
+    /* Brilho sutil no hover — toque sci-fi sem exagero. */
+    box-shadow: 0 0 0 1px rgba(47, 111, 237, 0.4), 0 8px 24px rgba(47, 111, 237, 0.28);
   }
 
   .ui-btn-ghost {
