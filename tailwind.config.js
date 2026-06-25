@@ -9,17 +9,19 @@ export default {
     },
     extend: {
       colors: {
+        // Identidade Garciat — dark premium "effervescent".
+        // Mantido em sincronia com src/lib/brand.ts (BRAND_COLORS).
         app: {
-          bg: "#0F1115",
-          s1: "#151922",
-          s2: "#1C2230",
-          border: "#2A3142",
-          text: "#E8ECF3",
-          muted: "#A7B0C0",
-          primary: "#2F6FED",
-          primaryHover: "#255ED0",
-          accent: "#C6A96B",
-          success: "#2E9E6F",
+          bg: "#0A0E13",
+          s1: "#111824",
+          s2: "#19222F",
+          border: "#283341",
+          text: "#EAEEF5",
+          muted: "#9CA7B8",
+          primary: "#1FCB87",
+          primaryHover: "#17AE73",
+          accent: "#E3B45E",
+          success: "#2FB67A",
         },
       },
       fontFamily: {
@@ -34,11 +36,19 @@ export default {
           "Arial",
           "sans-serif",
         ],
+        display: [
+          '"Space Grotesk"',
+          '"IBM Plex Sans"',
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+        ],
         mono: ['"IBM Plex Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", '"Liberation Mono"', "monospace"],
       },
       boxShadow: {
-        panel: "0 1px 0 rgba(255,255,255,0.03), 0 0 0 1px rgba(42,49,66,0.85)",
+        panel: "0 1px 0 rgba(255,255,255,0.03), 0 0 0 1px rgba(40,51,65,0.85)",
         raise: "0 10px 30px rgba(0,0,0,0.55)",
+        glow: "0 0 0 1px rgba(31,203,135,0.35), 0 8px 30px rgba(31,203,135,0.12)",
       },
     },
   },

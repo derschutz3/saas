@@ -81,6 +81,14 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
+      <header>
+        <div className="ui-label">Operação · Visão geral</div>
+        <h1 className="mt-1 font-display text-2xl font-bold tracking-tight text-app-text">
+          Painel <span className="text-app-primary">Garciat</span>
+        </h1>
+        <p className="mt-1 text-sm text-app-muted">Pedidos, recebíveis e situação fiscal em tempo real.</p>
+      </header>
+
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <StatCard label="Pedidos em andamento" value={`${stats.pedidosAbertos}`} tone="warn" hint="Confirmado → entrega" />
         <StatCard label="A receber (aberto)" value={formatMoney(stats.openAr)} tone="neutral" hint="Títulos OPEN" />

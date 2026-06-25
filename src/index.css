@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -23,11 +23,11 @@
   }
 
   ::selection {
-    background: color-mix(in oklab, #2F6FED 28%, transparent);
+    background: color-mix(in oklab, #1FCB87 30%, transparent);
   }
 
   * {
-    scrollbar-color: #2A3142 #0F1115;
+    scrollbar-color: #283341 #0A0E13;
   }
 }
 
@@ -65,7 +65,7 @@
   }
 
   .ui-btn:hover {
-    @apply bg-[#232B3B];
+    @apply bg-[#212B3A];
   }
 
   .ui-btn:disabled {
@@ -73,11 +73,11 @@
   }
 
   .ui-btn-primary {
-    @apply border-transparent bg-app-primary text-white;
+    @apply border-transparent bg-app-primary font-semibold text-[#04140D];
   }
 
   .ui-btn-primary:hover {
-    background-color: #255ED0;
+    background-color: #17AE73;
   }
 
   .ui-btn-ghost {
@@ -90,5 +90,30 @@
 
   .ui-kbd {
     @apply rounded-md border border-app-border bg-app-s2 px-1.5 py-0.5 font-mono text-[11px] text-app-muted;
+  }
+
+  /* Marca Garciat */
+  .brand-wordmark {
+    @apply font-display font-bold tracking-tight text-app-text;
+  }
+
+  .ui-label {
+    @apply font-mono text-[10px] uppercase tracking-[0.18em] text-app-muted;
+  }
+
+  .ui-segmented {
+    @apply inline-flex items-center gap-1 rounded-full border border-app-border bg-app-bg p-1;
+  }
+
+  .ui-segmented-item {
+    @apply rounded-full px-3 py-1 text-xs font-medium text-app-muted transition;
+  }
+
+  .ui-segmented-item:hover {
+    @apply text-app-text;
+  }
+
+  .ui-segmented-item-active {
+    @apply bg-app-primary text-[#04140D];
   }
 }
