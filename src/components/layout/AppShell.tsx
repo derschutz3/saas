@@ -19,15 +19,29 @@ const NavItem = (props: { to: string; label: string; icon: ReactNode }) => {
       to={props.to}
       className={({ isActive }) =>
         cn(
-          'group flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition',
+          'group relative flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition duration-150',
           isActive
-            ? 'bg-app-s2 text-app-text'
+            ? 'bg-app-s2 text-app-text shadow-[inset_0_0_0_1px_rgba(47,111,237,0.25)]'
             : 'text-app-muted hover:bg-app-s2 hover:text-app-text',
         )
       }
     >
-      <span className="text-app-muted group-hover:text-app-text">{props.icon}</span>
-      <span className="truncate">{props.label}</span>
+      {({ isActive }) => (
+        <>
+          {/* Barra de acento à esquerda do item ativo (toque sci-fi) */}
+          <span
+            aria-hidden
+            className={cn(
+              'absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-app-primary transition-opacity duration-150',
+              isActive ? 'opacity-100' : 'opacity-0',
+            )}
+          />
+          <span className={cn('transition-colors', isActive ? 'text-app-primary' : 'text-app-muted group-hover:text-app-text')}>
+            {props.icon}
+          </span>
+          <span className="truncate">{props.label}</span>
+        </>
+      )}
     </NavLink>
   )
 }
@@ -39,10 +53,10 @@ export default function AppShell() {
 
   return (
     <div className="ui-shell">
-      <div className="mx-auto grid max-w-[1480px] grid-cols-[288px_1fr] gap-6 px-6 py-6">
-        <aside className="ui-panel sticky top-6 h-[calc(100dvh-48px)] p-4">
+      <div className="mx-auto grid max-w-[1480px] grid-cols-1 gap-6 px-4 py-4 md:grid-cols-[288px_1fr] md:px-6 md:py-6">
+        <aside className="ui-panel p-4 md:sticky md:top-6 md:h-[calc(100dvh-48px)]">
           <div className="flex items-center gap-3 px-2 py-2">
-            <div className="grid size-10 place-items-center rounded-xl border border-app-border bg-app-s2 text-app-text">
+            <div className="grid size-10 place-items-center rounded-xl border border-app-primary/30 bg-gradient-to-br from-app-primary/20 to-app-s2 text-app-primary shadow-[0_0_18px_rgba(47,111,237,0.18)]">
               <Boxes className="size-5" />
             </div>
             <div className="min-w-0">
@@ -71,6 +85,7 @@ export default function AppShell() {
               navigate('/login')
             }}
             className="ui-btn ui-btn-ghost mt-6 w-full text-app-muted hover:text-app-text"
+            aria-label="Sair da sessão"
           >
             <LogOut className="size-4" />
             Sair

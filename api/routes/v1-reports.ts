@@ -13,11 +13,28 @@ import { Router, type Request, type Response } from 'express'
 import { ApiError, asyncHandler } from '../shared/http.js'
 import { requireAuth, getCtx } from '../shared/middleware.js'
 import { getStore } from '../infra/store.js'
+import { cacheRoute } from '../shared/route-cache.js'
 import { logger } from '../shared/logger.js'
 
 // Tipos auxiliares
 type Granularity = 'day' | 'week'
 type SortBy = 'revenue' | 'quantity'
+
+// Cache curto (20s) para relatórios: cada request reagrega todos os pedidos do
+// tenant (até 100k) em memória. Um dashboard que faz polling repete a mesma
+// query várias vezes por minuto — 20s de staleness é aceitável para analytics e
+// derruba o custo de CPU. Chave inclui tenant + path + querystring (isolamento
+// total entre tenants e entre filtros from/to/granularity/sortBy/limit).
+const REPORTS_TTL_MS = 20_000
+const reportsCache = cacheRoute({
+  ttlMs: REPORTS_TTL_MS,
+  key: (req) => {
+    const ctx = getCtx(req)
+    if (!ctx?.tenantId) return ''
+    const qs = new URLSearchParams(req.query as Record<string, string>).toString()
+    return `reports:${ctx.tenantId}:${req.path}?${qs}`
+  },
+})
 
 // =============== HELPERS ===============
 
@@ -88,6 +105,7 @@ export const registerReportRoutes = (app: Router): void => {
   router.get(
     '/sales/overview',
     requireAuth,
+    reportsCache,
     asyncHandler(async (req: Request, res: Response) => {
       const ctx = getCtx(req)
       const store = await getStore()
@@ -133,6 +151,7 @@ export const registerReportRoutes = (app: Router): void => {
   router.get(
     '/sales/timeseries',
     requireAuth,
+    reportsCache,
     asyncHandler(async (req: Request, res: Response) => {
       const ctx = getCtx(req)
       const store = await getStore()
@@ -171,7 +190,7 @@ export const registerReportRoutes = (app: Router): void => {
         }
       } else {
         // semana
-        let cursor = new Date(start)
+        const cursor = new Date(start)
         // alinhar no início da semana (segunda)
         const day = cursor.getUTCDay()
         const diff = (day + 6) % 7
@@ -197,6 +216,7 @@ export const registerReportRoutes = (app: Router): void => {
   router.get(
     '/sales/products',
     requireAuth,
+    reportsCache,
     asyncHandler(async (req: Request, res: Response) => {
       const ctx = getCtx(req)
       const store = await getStore()
@@ -329,6 +349,7 @@ export const registerReportRoutes = (app: Router): void => {
   router.get(
     '/sales/channels',
     requireAuth,
+    reportsCache,
     asyncHandler(async (req: Request, res: Response) => {
       const ctx = getCtx(req)
       const store = await getStore()
@@ -361,6 +382,7 @@ export const registerReportRoutes = (app: Router): void => {
   router.get(
     '/sales/customers',
     requireAuth,
+    reportsCache,
     asyncHandler(async (req: Request, res: Response) => {
       const ctx = getCtx(req)
       const store = await getStore()

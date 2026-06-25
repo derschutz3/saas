@@ -2250,7 +2250,6 @@ const createStore = async (): Promise<Store> => {
 
   try {
     await pool.query('SELECT 1')
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return new PostgresStore({ pool }) as unknown as Store
   } catch (err) {
     if (backend === 'postgres') throw err

@@ -37,7 +37,7 @@ const persist = (state: Pick<SessionState, 'token' | 'me'>) => {
   }
 }
 
-export const useSessionStore = create<SessionState>((set, get) => {
+export const useSessionStore = create<SessionState>((set) => {
   const initial = typeof window === 'undefined' ? { token: null, me: null } : load()
 
   return {

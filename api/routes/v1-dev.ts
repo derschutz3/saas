@@ -131,7 +131,6 @@ const buildRouter = (): Router => {
     '/seed-sales-data',
     requireAuth,
     asyncHandler(async (req: Request, res: Response) => {
-      // eslint-disable-next-line no-console
       console.log('[DEBUG-RAW] seed-sales-data handler entered')
       logger.info('seed-sales-data start')
       const ctx = getCtx(req)
